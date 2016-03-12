@@ -1,4 +1,4 @@
-package es.npatarino.android.gotchallenge;
+package es.npatarino.android.gotchallenge.presentation.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,17 +8,17 @@ import com.google.gson.annotations.SerializedName;
 public class GoTCharacter {
 
     @SerializedName("name")
-    String n;
+    public String n;
     @SerializedName("imageUrl")
-    String iu;
+    public String iu;
     @SerializedName("description")
-    String d;
+    public String d;
     @SerializedName("houseImageUrl")
-    String hu;
+    public String hu;
     @SerializedName("houseName")
-    String hn;
+    public String hn;
     @SerializedName("houseId")
-    String hi;
+    public String hi;
 
     public String getHu() {
         return hu;
@@ -74,11 +74,11 @@ public class GoTCharacter {
     public static class GoTHouse {
 
         @SerializedName("houseImageUrl")
-        String u;
+        public String u;
         @SerializedName("houseName")
-        String n;
+        public String n;
         @SerializedName("houseId")
-        String i;
+        public String i;
 
         public String getU() {
             return u;

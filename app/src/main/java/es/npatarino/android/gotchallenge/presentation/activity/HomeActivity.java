@@ -1,4 +1,4 @@
-package es.npatarino.android.gotchallenge;
+package es.npatarino.android.gotchallenge.presentation.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -34,6 +34,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import es.npatarino.android.gotchallenge.R;
+import es.npatarino.android.gotchallenge.presentation.model.GoTCharacter;
 
 public class HomeActivity extends AppCompatActivity {
 
