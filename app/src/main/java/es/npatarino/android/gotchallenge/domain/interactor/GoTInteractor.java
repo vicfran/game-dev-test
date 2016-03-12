@@ -21,6 +21,6 @@ public final class GoTInteractor {
      * @return A {@link List} of {@link GoTCharacter}
      */
     public static List<GoTCharacter> getCharacters() {
-        return sGoTRepository.caracters();
+        return sGoTRepository.characters();
     }
 }
