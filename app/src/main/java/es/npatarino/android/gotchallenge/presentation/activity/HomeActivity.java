@@ -9,7 +9,7 @@ import android.support.v7.widget.Toolbar;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.presentation.adapter.HomePagerAdapter;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     HomePagerAdapter mPagerAdapter;
     ViewPager mViewPager;

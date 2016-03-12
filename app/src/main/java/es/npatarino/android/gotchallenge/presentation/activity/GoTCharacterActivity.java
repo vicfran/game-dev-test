@@ -14,7 +14,7 @@ import java.net.URL;
 
 import es.npatarino.android.gotchallenge.R;
 
-public class GoTCharacterActivity extends AppCompatActivity {
+public class GoTCharacterActivity extends BaseActivity {
 
 
     private static final String TAG = "GoTCharacterActivity";
