@@ -69,7 +69,7 @@ public class GoTCharacterModel {
     }
 
 
-    public static class GoTHouse {
+    public static class GoTHouseModel {
 
         @SerializedName("houseImageUrl")
         public String imageUrl;

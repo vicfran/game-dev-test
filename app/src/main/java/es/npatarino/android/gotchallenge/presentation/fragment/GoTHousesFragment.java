@@ -68,7 +68,7 @@ public class GoTHousesFragment extends Fragment {
                     GoTHousesFragment.this.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ArrayList<GoTCharacterModel.GoTHouse> houses = new ArrayList<GoTCharacterModel.GoTHouse>();
+                            ArrayList<GoTCharacterModel.GoTHouseModel> houses = new ArrayList<GoTCharacterModel.GoTHouseModel>();
                             for (int i = 0; i < characters.size(); i++) {
                                 boolean houseExists = false;
                                 for (int j = 0; j < houses.size(); j++) {
@@ -78,7 +78,7 @@ public class GoTHousesFragment extends Fragment {
                                 }
                                 if (!houseExists) {
                                     if (characters.get(i).imageUrl != null && !characters.get(i).imageUrl.isEmpty()) {
-                                        GoTCharacterModel.GoTHouse h = new GoTCharacterModel.GoTHouse();
+                                        GoTCharacterModel.GoTHouseModel h = new GoTCharacterModel.GoTHouseModel();
                                         h.id = characters.get(i).houseId;
                                         h.name = characters.get(i).name;
                                         h.imageUrl = characters.get(i).houseUrl;

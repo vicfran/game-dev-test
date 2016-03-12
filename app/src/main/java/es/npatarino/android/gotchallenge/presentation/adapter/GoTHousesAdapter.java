@@ -21,7 +21,7 @@ import es.npatarino.android.gotchallenge.presentation.model.GoTCharacterModel;
 
 public class GoTHousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final List<GoTCharacterModel.GoTHouse> mHouses;
+    private final List<GoTCharacterModel.GoTHouseModel> mHouses;
     private Activity mActivity;
 
     public GoTHousesAdapter(Activity activity) {
@@ -29,9 +29,9 @@ public class GoTHousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         mActivity = activity;
     }
 
-    public void addAll(Collection<GoTCharacterModel.GoTHouse> houses) {
+    public void addAll(Collection<GoTCharacterModel.GoTHouseModel> houses) {
         for (int i = 0; i < houses.size(); i++) {
-            mHouses.add((GoTCharacterModel.GoTHouse) houses.toArray()[i]);
+            mHouses.add((GoTCharacterModel.GoTHouseModel) houses.toArray()[i]);
         }
     }
 
@@ -61,7 +61,7 @@ public class GoTHousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             backgroundImageView = (ImageView) itemView.findViewById(R.id.img_background);
         }
 
-        public void render(final GoTCharacterModel.GoTHouse house) {
+        public void render(final GoTCharacterModel.GoTHouseModel house) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
