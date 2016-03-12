@@ -36,32 +36,32 @@ public class GoTListFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
-        final ContentLoadingProgressBar pb = (ContentLoadingProgressBar) rootView.findViewById(R.id.pb);
-        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.rv);
+        final ContentLoadingProgressBar progressBar = (ContentLoadingProgressBar) rootView.findViewById(R.id.progress_bar);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        final GoTAdapter adp = new GoTAdapter(getActivity());
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv.setHasFixedSize(true);
-        rv.setAdapter(adp);
+        final GoTAdapter adapter = new GoTAdapter(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
 
         new Thread(new Runnable() {
 
             @Override
             public void run() {
-                String url = "http://ec2-52-18-202-124.eu-west-1.compute.amazonaws.com:3000/characters";
+                String urlString = "http://ec2-52-18-202-124.eu-west-1.compute.amazonaws.com:3000/characters";
 
-                URL obj = null;
+                URL url = null;
                 try {
-                    obj = new URL(url);
-                    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-                    con.setRequestMethod("GET");
-                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    url = new URL(urlString);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String inputLine;
                     StringBuffer response = new StringBuffer();
-                    while ((inputLine = in.readLine()) != null) {
+                    while ((inputLine = reader.readLine()) != null) {
                         response.append(inputLine);
                     }
-                    in.close();
+                    reader.close();
 
                     Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
                     }.getType();
@@ -69,9 +69,9 @@ public class GoTListFragment extends Fragment {
                     GoTListFragment.this.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            adp.addAll(characters);
-                            adp.notifyDataSetChanged();
-                            pb.hide();
+                            adapter.addAll(characters);
+                            adapter.notifyDataSetChanged();
+                            progressBar.hide();
                         }
                     });
                 } catch (IOException e) {

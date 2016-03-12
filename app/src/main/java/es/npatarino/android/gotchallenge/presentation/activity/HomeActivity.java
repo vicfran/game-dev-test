@@ -11,40 +11,40 @@ import es.npatarino.android.gotchallenge.presentation.adapter.SectionsPagerAdapt
 
 public class HomeActivity extends AppCompatActivity {
 
-    SectionsPagerAdapter spa;
-    ViewPager vp;
-    Toolbar toolbar;
-    TabLayout tabLayout;
+    SectionsPagerAdapter mPagerAdapter;
+    ViewPager mViewPager;
+    Toolbar mToolbar;
+    TabLayout mTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setSpa(new SectionsPagerAdapter(getSupportFragmentManager()));
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        setPagerAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
 
-        setVp((ViewPager) findViewById(R.id.container));
-        getVp().setAdapter(getSpa());
+        setViewPager((ViewPager) findViewById(R.id.container));
+        getViewPager().setAdapter(getPagerAdapter());
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(getVp());
+        mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        mTabLayout.setupWithViewPager(getViewPager());
     }
 
-    public SectionsPagerAdapter getSpa() {
-        return spa;
+    public SectionsPagerAdapter getPagerAdapter() {
+        return mPagerAdapter;
     }
 
-    public void setSpa(SectionsPagerAdapter spa) {
-        this.spa = spa;
+    public void setPagerAdapter(SectionsPagerAdapter pagerAdapter) {
+        this.mPagerAdapter = pagerAdapter;
     }
 
-    public ViewPager getVp() {
-        return vp;
+    public ViewPager getViewPager() {
+        return mViewPager;
     }
 
-    public void setVp(ViewPager vp) {
-        this.vp = vp;
+    public void setViewPager(ViewPager viewPager) {
+        this.mViewPager = viewPager;
     }
 }

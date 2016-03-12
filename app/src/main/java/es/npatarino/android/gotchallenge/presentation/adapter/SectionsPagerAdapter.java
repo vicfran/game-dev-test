@@ -14,8 +14,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(int position) {
-        if (position == 0) {
+    public Fragment getItem(int page) {
+        if (page == 0) {
             return new GoTListFragment();
         } else {
             return new GoTHousesListFragment();
@@ -28,8 +28,8 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
-        switch (position) {
+    public CharSequence getPageTitle(int page) {
+        switch (page) {
             case 0:
                 return "Characters";
             case 1:

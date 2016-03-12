@@ -1,15 +1,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="230dp">
+                android:layout_height="@dimen/row_height">
 
     <ImageView
-        android:id="@+id/ivBackground"
+        android:id="@+id/img_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
 
+    <View
+        android:id="@+id/view_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/row_gradient_height"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/row_gradient"
+        />
+
     <TextView
-        android:id="@+id/tv_name"
+        android:id="@+id/lbl_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

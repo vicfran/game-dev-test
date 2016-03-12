@@ -22,7 +22,7 @@
             >
 
             <android.support.v7.widget.Toolbar
-                android:id="@+id/t"
+                android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
@@ -36,7 +36,7 @@
                 >
 
                 <ImageView
-                    android:id="@+id/iv_photo"
+                    android:id="@+id/img_photo"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/detail_header_height"
                     android:scaleType="centerCrop"
@@ -45,7 +45,7 @@
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/lbl_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -55,7 +55,7 @@
                 />
 
             <TextView
-                android:id="@+id/tv_description"
+                android:id="@+id/lbl_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_horizontal_margin"

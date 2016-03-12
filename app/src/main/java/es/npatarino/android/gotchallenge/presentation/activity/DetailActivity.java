@@ -24,16 +24,16 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        final ImageView ivp = (ImageView) findViewById(R.id.iv_photo);
-        final TextView tvn = (TextView) findViewById(R.id.tv_name);
-        final TextView tvd = (TextView) findViewById(R.id.tv_description);
+        final ImageView photoImageView = (ImageView) findViewById(R.id.img_photo);
+        final TextView nameTextView = (TextView) findViewById(R.id.lbl_name);
+        final TextView descriptionTextView = (TextView) findViewById(R.id.lbl_description);
 
-        final String d = getIntent().getStringExtra("description");
-        final String n = getIntent().getStringExtra("name");
-        final String i = getIntent().getStringExtra("imageUrl");
+        final String description = getIntent().getStringExtra("description");
+        final String name = getIntent().getStringExtra("name");
+        final String imageUrl = getIntent().getStringExtra("imageUrl");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.t);
-        toolbar.setTitle(n);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(name);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -44,14 +44,14 @@ public class DetailActivity extends AppCompatActivity {
             public void run() {
                 URL url = null;
                 try {
-                    url = new URL(i);
-                    final Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                    url = new URL(imageUrl);
+                    final Bitmap photo = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                     DetailActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ivp.setImageBitmap(bmp);
-                            tvn.setText(n);
-                            tvd.setText(d);
+                            photoImageView.setImageBitmap(photo);
+                            nameTextView.setText(name);
+                            descriptionTextView.setText(description);
                         }
                     });
                 } catch (IOException e) {

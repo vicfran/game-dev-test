@@ -36,60 +36,60 @@ public class GoTHousesListFragment extends Fragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
-        final ContentLoadingProgressBar pb = (ContentLoadingProgressBar) rootView.findViewById(R.id.pb);
-        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.rv);
+        final ContentLoadingProgressBar progressBar = (ContentLoadingProgressBar) rootView.findViewById(R.id.progress_bar);
+        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        final GoTHouseAdapter adp = new GoTHouseAdapter(getActivity());
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv.setHasFixedSize(true);
-        rv.setAdapter(adp);
+        final GoTHouseAdapter housesAdapter = new GoTHouseAdapter(getActivity());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(housesAdapter);
 
         new Thread(new Runnable() {
 
             @Override
             public void run() {
-                String url = "http://ec2-52-18-202-124.eu-west-1.compute.amazonaws.com:3000/characters";
+                String urlString = "http://ec2-52-18-202-124.eu-west-1.compute.amazonaws.com:3000/characters";
 
-                URL obj = null;
+                URL url = null;
                 try {
-                    obj = new URL(url);
-                    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-                    con.setRequestMethod("GET");
-                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    url = new URL(urlString);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                     String inputLine;
                     StringBuffer response = new StringBuffer();
-                    while ((inputLine = in.readLine()) != null) {
+                    while ((inputLine = reader.readLine()) != null) {
                         response.append(inputLine);
                     }
-                    in.close();
+                    reader.close();
                     Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
                     }.getType();
                     final List<GoTCharacter> characters = new Gson().fromJson(response.toString(), listType);
                     GoTHousesListFragment.this.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ArrayList<GoTCharacter.GoTHouse> hs = new ArrayList<GoTCharacter.GoTHouse>();
+                            ArrayList<GoTCharacter.GoTHouse> houses = new ArrayList<GoTCharacter.GoTHouse>();
                             for (int i = 0; i < characters.size(); i++) {
-                                boolean b = false;
-                                for (int j = 0; j < hs.size(); j++) {
-                                    if (hs.get(j).n.equalsIgnoreCase(characters.get(i).hn)) {
-                                        b = true;
+                                boolean houseExists = false;
+                                for (int j = 0; j < houses.size(); j++) {
+                                    if (houses.get(j).name.equalsIgnoreCase(characters.get(i).name)) {
+                                        houseExists = true;
                                     }
                                 }
-                                if (!b) {
-                                    if (characters.get(i).hi != null && !characters.get(i).hi.isEmpty()) {
+                                if (!houseExists) {
+                                    if (characters.get(i).imageUrl != null && !characters.get(i).imageUrl.isEmpty()) {
                                         GoTCharacter.GoTHouse h = new GoTCharacter.GoTHouse();
-                                        h.i = characters.get(i).hi;
-                                        h.n = characters.get(i).hn;
-                                        h.u = characters.get(i).hu;
-                                        hs.add(h);
-                                        b = false;
+                                        h.id = characters.get(i).houseId;
+                                        h.name = characters.get(i).name;
+                                        h.imageUrl = characters.get(i).houseUrl;
+                                        houses.add(h);
+                                        houseExists = false;
                                     }
                                 }
                             }
-                            adp.addAll(hs);
-                            adp.notifyDataSetChanged();
-                            pb.hide();
+                            housesAdapter.addAll(houses);
+                            housesAdapter.notifyDataSetChanged();
+                            progressBar.hide();
                         }
                     });
                 } catch (IOException e) {

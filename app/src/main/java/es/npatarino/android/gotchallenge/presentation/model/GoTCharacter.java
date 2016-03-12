@@ -8,64 +8,64 @@ import com.google.gson.annotations.SerializedName;
 public class GoTCharacter {
 
     @SerializedName("name")
-    public String n;
+    public String name;
     @SerializedName("imageUrl")
-    public String iu;
+    public String imageUrl;
     @SerializedName("description")
-    public String d;
+    public String description;
     @SerializedName("houseImageUrl")
-    public String hu;
+    public String houseUrl;
     @SerializedName("houseName")
-    public String hn;
+    public String houseName;
     @SerializedName("houseId")
-    public String hi;
+    public String houseId;
 
-    public String getHu() {
-        return hu;
+    public String getHouseUrl() {
+        return houseUrl;
     }
 
-    public void setHu(final String s) {
-        this.hu = s;
+    public void setHouseUrl(final String houseUrl) {
+        this.houseUrl = houseUrl;
     }
 
-    public String getHn() {
-        return hn;
+    public String getHouseName() {
+        return houseName;
     }
 
-    public void setHn(final String s) {
-        this.hn = s;
+    public void setHouseName(final String houseName) {
+        this.houseName = houseName;
     }
 
-    public String getHi() {
-        return hi;
+    public String getHouseId() {
+        return houseId;
     }
 
-    public void setHi(final String s) {
-        this.hi = s;
+    public void setHouseId(final String houseId) {
+        this.houseId = houseId;
     }
 
-    public String getN() {
-        return n;
+    public String getName() {
+        return name;
     }
 
-    public void setN(final String s) {
-        this.n = s;
+    public void setName(final String name) {
+        this.name = name;
     }
 
-    public String getIu() {
-        return iu;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setIu(final String s) {
-        this.iu = s;
+    public void setImageUrl(final String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public String getD() {
-        return d;
+    public String getDescription() {
+        return description;
     }
 
-    public void setD(final String s) {
-        this.d = s;
+    public void setDescription(final String description) {
+        this.description = description;
     }
 
     /**
@@ -74,34 +74,34 @@ public class GoTCharacter {
     public static class GoTHouse {
 
         @SerializedName("houseImageUrl")
-        public String u;
+        public String imageUrl;
         @SerializedName("houseName")
-        public String n;
+        public String name;
         @SerializedName("houseId")
-        public String i;
+        public String id;
 
-        public String getU() {
-            return u;
+        public String getImageUrl() {
+            return imageUrl;
         }
 
-        public void setU(final String houseImageUrl) {
-            this.u = houseImageUrl;
+        public void setImageUrl(final String imageUrl) {
+            this.imageUrl = imageUrl;
         }
 
-        public String getN() {
-            return n;
+        public String getName() {
+            return name;
         }
 
-        public void setN(final String houseName) {
-            this.n = houseName;
+        public void setName(final String name) {
+            this.name = name;
         }
 
-        public String getI() {
-            return i;
+        public String getId() {
+            return id;
         }
 
-        public void setI(final String houseId) {
-            this.i = houseId;
+        public void setId(final String id) {
+            this.id = id;
         }
 
     }

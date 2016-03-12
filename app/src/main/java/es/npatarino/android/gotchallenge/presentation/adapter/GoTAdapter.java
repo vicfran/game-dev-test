@@ -24,36 +24,36 @@ import es.npatarino.android.gotchallenge.presentation.model.GoTCharacter;
 
 public class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final List<GoTCharacter> gcs;
-    private Activity a;
+    private final List<GoTCharacter> mCharacters;
+    private Activity mActivity;
 
     public GoTAdapter(Activity activity) {
-        this.gcs = new ArrayList<>();
-        a = activity;
+        this.mCharacters = new ArrayList<>();
+        mActivity = activity;
     }
 
-    public void addAll(Collection<GoTCharacter> collection) {
-        for (int i = 0; i < collection.size(); i++) {
-            gcs.add((GoTCharacter) collection.toArray()[i]);
+    public void addAll(Collection<GoTCharacter> characters) {
+        for (int i = 0; i < characters.size(); i++) {
+            mCharacters.add((GoTCharacter) characters.toArray()[i]);
         }
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new GotCharacterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.got_character_row, parent, false));
+        return new GotCharacterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_got_character_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         GotCharacterViewHolder gotCharacterViewHolder = (GotCharacterViewHolder) holder;
-        gotCharacterViewHolder.render(gcs.get(position));
-        ((GotCharacterViewHolder) holder).imp.setOnClickListener(new View.OnClickListener() {
+        gotCharacterViewHolder.render(mCharacters.get(position));
+        ((GotCharacterViewHolder) holder).backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
                 Intent intent = new Intent(((GotCharacterViewHolder) holder).itemView.getContext(), DetailActivity.class);
-                intent.putExtra("description", gcs.get(position).d);
-                intent.putExtra("name", gcs.get(position).n);
-                intent.putExtra("imageUrl", gcs.get(position).iu);
+                intent.putExtra("description", mCharacters.get(position).description);
+                intent.putExtra("name", mCharacters.get(position).name);
+                intent.putExtra("imageUrl", mCharacters.get(position).imageUrl);
                 ((GotCharacterViewHolder) holder).itemView.getContext().startActivity(intent);
             }
         });
@@ -61,34 +61,34 @@ public class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return gcs.size();
+        return mCharacters.size();
     }
 
     class GotCharacterViewHolder extends RecyclerView.ViewHolder {
 
         private static final String TAG = "GotCharacterViewHolder";
-        ImageView imp;
-        TextView tvn;
+        ImageView backgroundImageView;
+        TextView nameTextView;
 
         public GotCharacterViewHolder(View itemView) {
             super(itemView);
-            imp = (ImageView) itemView.findViewById(R.id.ivBackground);
-            tvn = (TextView) itemView.findViewById(R.id.tv_name);
+            backgroundImageView = (ImageView) itemView.findViewById(R.id.img_background);
+            nameTextView = (TextView) itemView.findViewById(R.id.lbl_name);
         }
 
-        public void render(final GoTCharacter goTCharacter) {
+        public void render(final GoTCharacter character) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     URL url = null;
                     try {
-                        url = new URL(goTCharacter.iu);
-                        final Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                        a.runOnUiThread(new Runnable() {
+                        url = new URL(character.imageUrl);
+                        final Bitmap background = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                        mActivity.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                imp.setImageBitmap(bmp);
-                                tvn.setText(goTCharacter.n);
+                                backgroundImageView.setImageBitmap(background);
+                                nameTextView.setText(character.name);
                             }
                         });
                     } catch (IOException e) {
