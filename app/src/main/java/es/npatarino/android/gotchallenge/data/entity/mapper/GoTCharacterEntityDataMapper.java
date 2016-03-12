@@ -9,7 +9,7 @@ import es.npatarino.android.gotchallenge.domain.GoTCharacter;
 /**
  * Transforms {@link GoTCharacterEntity} from data layer to {@link GoTCharacter} of domain layer
  */
-public class GoTCharacterEntityDataMapper {
+public final class GoTCharacterEntityDataMapper {
 
     private GoTCharacterEntityDataMapper() {}
 
