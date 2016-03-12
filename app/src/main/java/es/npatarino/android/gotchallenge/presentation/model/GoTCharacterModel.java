@@ -2,7 +2,7 @@ package es.npatarino.android.gotchallenge.presentation.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class GoTCharacter {
+public class GoTCharacterModel {
 
     @SerializedName("name")
     public String name;

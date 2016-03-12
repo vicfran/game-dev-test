@@ -24,7 +24,7 @@ import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.presentation.adapter.GoTHousesAdapter;
-import es.npatarino.android.gotchallenge.presentation.model.GoTCharacter;
+import es.npatarino.android.gotchallenge.presentation.model.GoTCharacterModel;
 
 public class GoTHousesFragment extends Fragment {
 
@@ -62,13 +62,13 @@ public class GoTHousesFragment extends Fragment {
                         response.append(inputLine);
                     }
                     reader.close();
-                    Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
+                    Type listType = new TypeToken<ArrayList<GoTCharacterModel>>() {
                     }.getType();
-                    final List<GoTCharacter> characters = new Gson().fromJson(response.toString(), listType);
+                    final List<GoTCharacterModel> characters = new Gson().fromJson(response.toString(), listType);
                     GoTHousesFragment.this.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ArrayList<GoTCharacter.GoTHouse> houses = new ArrayList<GoTCharacter.GoTHouse>();
+                            ArrayList<GoTCharacterModel.GoTHouse> houses = new ArrayList<GoTCharacterModel.GoTHouse>();
                             for (int i = 0; i < characters.size(); i++) {
                                 boolean houseExists = false;
                                 for (int j = 0; j < houses.size(); j++) {
@@ -78,7 +78,7 @@ public class GoTHousesFragment extends Fragment {
                                 }
                                 if (!houseExists) {
                                     if (characters.get(i).imageUrl != null && !characters.get(i).imageUrl.isEmpty()) {
-                                        GoTCharacter.GoTHouse h = new GoTCharacter.GoTHouse();
+                                        GoTCharacterModel.GoTHouse h = new GoTCharacterModel.GoTHouse();
                                         h.id = characters.get(i).houseId;
                                         h.name = characters.get(i).name;
                                         h.imageUrl = characters.get(i).houseUrl;

@@ -20,11 +20,11 @@ import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.presentation.activity.GoTCharacterActivity;
-import es.npatarino.android.gotchallenge.presentation.model.GoTCharacter;
+import es.npatarino.android.gotchallenge.presentation.model.GoTCharacterModel;
 
 public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final List<GoTCharacter> mCharacters;
+    private final List<GoTCharacterModel> mCharacters;
     private Activity mActivity;
 
     public GoTCharactersAdapter(Activity activity) {
@@ -32,9 +32,9 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
         mActivity = activity;
     }
 
-    public void addAll(Collection<GoTCharacter> characters) {
+    public void addAll(Collection<GoTCharacterModel> characters) {
         for (int i = 0; i < characters.size(); i++) {
-            mCharacters.add((GoTCharacter) characters.toArray()[i]);
+            mCharacters.add((GoTCharacterModel) characters.toArray()[i]);
         }
     }
 
@@ -76,7 +76,7 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
             nameTextView = (TextView) itemView.findViewById(R.id.lbl_name);
         }
 
-        public void render(final GoTCharacter character) {
+        public void render(final GoTCharacterModel character) {
             new Thread(new Runnable() {
                 @Override
                 public void run() {

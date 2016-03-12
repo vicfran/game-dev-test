@@ -24,7 +24,7 @@ import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.presentation.adapter.GoTCharactersAdapter;
-import es.npatarino.android.gotchallenge.presentation.model.GoTCharacter;
+import es.npatarino.android.gotchallenge.presentation.model.GoTCharacterModel;
 
 public class GoTCharactersFragment extends Fragment {
 
@@ -63,9 +63,9 @@ public class GoTCharactersFragment extends Fragment {
                     }
                     reader.close();
 
-                    Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
+                    Type listType = new TypeToken<ArrayList<GoTCharacterModel>>() {
                     }.getType();
-                    final List<GoTCharacter> characters = new Gson().fromJson(response.toString(), listType);
+                    final List<GoTCharacterModel> characters = new Gson().fromJson(response.toString(), listType);
                     GoTCharactersFragment.this.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
