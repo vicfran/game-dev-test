@@ -15,18 +15,20 @@ import es.npatarino.android.gotchallenge.data.entity.GoTCharacterEntity;
 /**
  * Transforms JSON data to {@link GoTCharacterEntity} objects
  */
-public final class GoTCharacterEntityJsonMapper {
+public class GoTCharacterEntityJsonMapper {
 
-    private static final Gson sGson = new Gson();
+    private Gson mGson;
 
-    private GoTCharacterEntityJsonMapper() {}
+    public GoTCharacterEntityJsonMapper() {
+        mGson = new Gson();
+    }
 
     /**
      * Transforms a JSON into a {@link GoTCharacterEntity}
      * @param json JSON representing a {@link GoTCharacterEntity}
      * @return {@link GoTCharacterEntity} obtained from a JSON
      */
-    public static GoTCharacterEntity transform(String json) {
+    public GoTCharacterEntity transform(String json) {
         GoTCharacterEntity entity = new GoTCharacterEntity();
 
         if (TextUtils.isEmpty(json))
@@ -38,7 +40,7 @@ public final class GoTCharacterEntityJsonMapper {
         Type entityType = new TypeToken<GoTCharacterEntity>() {}.getType();
 
         try {
-            entity = sGson.fromJson(json, entityType);
+            entity = mGson.fromJson(json, entityType);
         } catch (JsonSyntaxException e) {
             return new GoTCharacterEntity();
         }
@@ -51,7 +53,7 @@ public final class GoTCharacterEntityJsonMapper {
      * @param json JSON representing a {@link List} of {@link GoTCharacterEntity}
      * @return {@link List} of {@link GoTCharacterEntity} obtained from a JSON
      */
-    public static List<GoTCharacterEntity> transformList(String json) {
+    public List<GoTCharacterEntity> transformList(String json) {
         List<GoTCharacterEntity> entities = new ArrayList<>();
 
         if (TextUtils.isEmpty(json))
@@ -60,7 +62,7 @@ public final class GoTCharacterEntityJsonMapper {
         Type entityListType = new TypeToken<List<GoTCharacterEntity>>() {}.getType();
 
         try {
-            entities = sGson.fromJson(json, entityListType);
+            entities = mGson.fromJson(json, entityListType);
         } catch (JsonSyntaxException e) {
             return new ArrayList<>();
         }

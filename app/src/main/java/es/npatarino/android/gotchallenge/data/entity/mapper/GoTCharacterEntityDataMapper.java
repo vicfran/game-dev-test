@@ -9,16 +9,16 @@ import es.npatarino.android.gotchallenge.domain.GoTCharacter;
 /**
  * Transforms {@link GoTCharacterEntity} from data layer to {@link GoTCharacter} of domain layer
  */
-public final class GoTCharacterEntityDataMapper {
+public class GoTCharacterEntityDataMapper {
 
-    private GoTCharacterEntityDataMapper() {}
+    public GoTCharacterEntityDataMapper() {}
 
     /**
      * Transforms a {@link GoTCharacterEntity} into a {@link GoTCharacter}
      * @param entity {@link GoTCharacterEntity} to transform
      * @return {@link GoTCharacter} obtained from a {@link GoTCharacterEntity}
      */
-    public static GoTCharacter transform(GoTCharacterEntity entity) {
+    public GoTCharacter transform(GoTCharacterEntity entity) {
         GoTCharacter model = new GoTCharacter();
 
         if (entity == null)
@@ -39,7 +39,7 @@ public final class GoTCharacterEntityDataMapper {
      * @param entities {@link List} of {@link GoTCharacterEntity} to transform
      * @return {@link List} of {@link GoTCharacter} obtained from a {@link List} of {@link GoTCharacterEntity}
      */
-    public static List<GoTCharacter> transform(List<GoTCharacterEntity> entities) {
+    public List<GoTCharacter> transform(List<GoTCharacterEntity> entities) {
         List<GoTCharacter> models = new ArrayList<>();
 
         if (entities == null)
