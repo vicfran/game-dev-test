@@ -2,9 +2,6 @@ package es.npatarino.android.gotchallenge.presentation.model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Nicolás Patarino on 21/02/16.
- */
 public class GoTCharacter {
 
     @SerializedName("name")
@@ -68,9 +65,7 @@ public class GoTCharacter {
         this.description = description;
     }
 
-    /**
-     * Created by Nicolás Patarino on 21/02/16.
-     */
+
     public static class GoTHouse {
 
         @SerializedName("houseImageUrl")
