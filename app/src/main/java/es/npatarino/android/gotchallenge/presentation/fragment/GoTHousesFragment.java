@@ -23,14 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
-import es.npatarino.android.gotchallenge.presentation.adapter.GoTHouseAdapter;
+import es.npatarino.android.gotchallenge.presentation.adapter.GoTHousesAdapter;
 import es.npatarino.android.gotchallenge.presentation.model.GoTCharacter;
 
-public class GoTHousesListFragment extends Fragment {
+public class GoTHousesFragment extends Fragment {
 
-    private static final String TAG = "GoTHousesListFragment";
+    private static final String TAG = "GoTHousesFragment";
 
-    public GoTHousesListFragment() {
+    public GoTHousesFragment() {
     }
 
     @Override
@@ -39,7 +39,7 @@ public class GoTHousesListFragment extends Fragment {
         final ContentLoadingProgressBar progressBar = (ContentLoadingProgressBar) rootView.findViewById(R.id.progress_bar);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        final GoTHouseAdapter housesAdapter = new GoTHouseAdapter(getActivity());
+        final GoTHousesAdapter housesAdapter = new GoTHousesAdapter(getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(housesAdapter);
@@ -65,7 +65,7 @@ public class GoTHousesListFragment extends Fragment {
                     Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
                     }.getType();
                     final List<GoTCharacter> characters = new Gson().fromJson(response.toString(), listType);
-                    GoTHousesListFragment.this.getActivity().runOnUiThread(new Runnable() {
+                    GoTHousesFragment.this.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             ArrayList<GoTCharacter.GoTHouse> houses = new ArrayList<GoTCharacter.GoTHouse>();

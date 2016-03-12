@@ -23,14 +23,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
-import es.npatarino.android.gotchallenge.presentation.adapter.GoTAdapter;
+import es.npatarino.android.gotchallenge.presentation.adapter.GoTCharactersAdapter;
 import es.npatarino.android.gotchallenge.presentation.model.GoTCharacter;
 
-public class GoTListFragment extends Fragment {
+public class GoTCharactersFragment extends Fragment {
 
-    private static final String TAG = "GoTListFragment";
+    private static final String TAG = "CharactersListFragment";
 
-    public GoTListFragment() {
+    public GoTCharactersFragment() {
     }
 
     @Override
@@ -39,7 +39,7 @@ public class GoTListFragment extends Fragment {
         final ContentLoadingProgressBar progressBar = (ContentLoadingProgressBar) rootView.findViewById(R.id.progress_bar);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        final GoTAdapter adapter = new GoTAdapter(getActivity());
+        final GoTCharactersAdapter adapter = new GoTCharactersAdapter(getActivity());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
@@ -66,7 +66,7 @@ public class GoTListFragment extends Fragment {
                     Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
                     }.getType();
                     final List<GoTCharacter> characters = new Gson().fromJson(response.toString(), listType);
-                    GoTListFragment.this.getActivity().runOnUiThread(new Runnable() {
+                    GoTCharactersFragment.this.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             adapter.addAll(characters);

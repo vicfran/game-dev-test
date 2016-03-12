@@ -7,11 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import es.npatarino.android.gotchallenge.R;
-import es.npatarino.android.gotchallenge.presentation.adapter.SectionsPagerAdapter;
+import es.npatarino.android.gotchallenge.presentation.adapter.HomePagerAdapter;
 
 public class HomeActivity extends AppCompatActivity {
 
-    SectionsPagerAdapter mPagerAdapter;
+    HomePagerAdapter mPagerAdapter;
     ViewPager mViewPager;
     Toolbar mToolbar;
     TabLayout mTabLayout;
@@ -23,7 +23,7 @@ public class HomeActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        setPagerAdapter(new SectionsPagerAdapter(getSupportFragmentManager()));
+        setPagerAdapter(new HomePagerAdapter(getSupportFragmentManager()));
 
         setViewPager((ViewPager) findViewById(R.id.container));
         getViewPager().setAdapter(getPagerAdapter());
@@ -32,11 +32,11 @@ public class HomeActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(getViewPager());
     }
 
-    public SectionsPagerAdapter getPagerAdapter() {
+    public HomePagerAdapter getPagerAdapter() {
         return mPagerAdapter;
     }
 
-    public void setPagerAdapter(SectionsPagerAdapter pagerAdapter) {
+    public void setPagerAdapter(HomePagerAdapter pagerAdapter) {
         this.mPagerAdapter = pagerAdapter;
     }
 

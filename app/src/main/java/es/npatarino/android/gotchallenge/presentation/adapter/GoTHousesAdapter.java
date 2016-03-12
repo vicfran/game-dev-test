@@ -19,12 +19,12 @@ import java.util.List;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.presentation.model.GoTCharacter;
 
-public class GoTHouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class GoTHousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<GoTCharacter.GoTHouse> mHouses;
     private Activity mActivity;
 
-    public GoTHouseAdapter(Activity activity) {
+    public GoTHousesAdapter(Activity activity) {
         this.mHouses = new ArrayList<>();
         mActivity = activity;
     }
@@ -37,13 +37,13 @@ public class GoTHouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new GotCharacterViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_got_house_row, parent, false));
+        return new GotHouseViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.view_got_house_row, parent, false));
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        GotCharacterViewHolder gotCharacterViewHolder = (GotCharacterViewHolder) holder;
-        gotCharacterViewHolder.render(mHouses.get(position));
+        GotHouseViewHolder houseViewHolder = (GotHouseViewHolder) holder;
+        houseViewHolder.render(mHouses.get(position));
     }
 
     @Override
@@ -51,12 +51,12 @@ public class GoTHouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return mHouses.size();
     }
 
-    class GotCharacterViewHolder extends RecyclerView.ViewHolder {
+    class GotHouseViewHolder extends RecyclerView.ViewHolder {
 
-        private static final String TAG = "GotCharacterViewHolder";
+        private static final String TAG = "GotHouseViewHolder";
         ImageView backgroundImageView;
 
-        public GotCharacterViewHolder(View itemView) {
+        public GotHouseViewHolder(View itemView) {
             super(itemView);
             backgroundImageView = (ImageView) itemView.findViewById(R.id.img_background);
         }

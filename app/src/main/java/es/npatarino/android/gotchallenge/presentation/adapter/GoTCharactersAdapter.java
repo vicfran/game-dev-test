@@ -19,15 +19,15 @@ import java.util.Collection;
 import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
-import es.npatarino.android.gotchallenge.presentation.activity.DetailActivity;
+import es.npatarino.android.gotchallenge.presentation.activity.GoTCharacterActivity;
 import es.npatarino.android.gotchallenge.presentation.model.GoTCharacter;
 
-public class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<GoTCharacter> mCharacters;
     private Activity mActivity;
 
-    public GoTAdapter(Activity activity) {
+    public GoTCharactersAdapter(Activity activity) {
         this.mCharacters = new ArrayList<>();
         mActivity = activity;
     }
@@ -50,7 +50,7 @@ public class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ((GotCharacterViewHolder) holder).backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Intent intent = new Intent(((GotCharacterViewHolder) holder).itemView.getContext(), DetailActivity.class);
+                Intent intent = new Intent(((GotCharacterViewHolder) holder).itemView.getContext(), GoTCharacterActivity.class);
                 intent.putExtra("description", mCharacters.get(position).description);
                 intent.putExtra("name", mCharacters.get(position).name);
                 intent.putExtra("imageUrl", mCharacters.get(position).imageUrl);

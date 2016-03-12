@@ -4,21 +4,21 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import es.npatarino.android.gotchallenge.presentation.fragment.GoTHousesListFragment;
-import es.npatarino.android.gotchallenge.presentation.fragment.GoTListFragment;
+import es.npatarino.android.gotchallenge.presentation.fragment.GoTHousesFragment;
+import es.npatarino.android.gotchallenge.presentation.fragment.GoTCharactersFragment;
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter {
+public class HomePagerAdapter extends FragmentPagerAdapter {
 
-    public SectionsPagerAdapter(FragmentManager fm) {
+    public HomePagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int page) {
         if (page == 0) {
-            return new GoTListFragment();
+            return new GoTCharactersFragment();
         } else {
-            return new GoTHousesListFragment();
+            return new GoTHousesFragment();
         }
     }
 

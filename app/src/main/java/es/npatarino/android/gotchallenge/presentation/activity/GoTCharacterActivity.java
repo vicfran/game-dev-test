@@ -14,10 +14,10 @@ import java.net.URL;
 
 import es.npatarino.android.gotchallenge.R;
 
-public class DetailActivity extends AppCompatActivity {
+public class GoTCharacterActivity extends AppCompatActivity {
 
 
-    private static final String TAG = "DetailActivity";
+    private static final String TAG = "GoTCharacterActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class DetailActivity extends AppCompatActivity {
                 try {
                     url = new URL(imageUrl);
                     final Bitmap photo = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    DetailActivity.this.runOnUiThread(new Runnable() {
+                    GoTCharacterActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             photoImageView.setImageBitmap(photo);
