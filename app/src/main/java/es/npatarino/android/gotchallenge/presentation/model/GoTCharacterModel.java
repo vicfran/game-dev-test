@@ -2,6 +2,9 @@ package es.npatarino.android.gotchallenge.presentation.model;
 
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * GoTCharacterModel encapsulates a character data model in the presentation layer
+ */
 public class GoTCharacterModel {
 
     @SerializedName("name")

@@ -23,8 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
+import es.npatarino.android.gotchallenge.domain.interactor.GoTInteractor;
 import es.npatarino.android.gotchallenge.presentation.adapter.GoTCharactersAdapter;
 import es.npatarino.android.gotchallenge.presentation.model.GoTCharacterModel;
+import es.npatarino.android.gotchallenge.presentation.model.mapper.GoTCharacterModelMapper;
 
 public class GoTCharactersFragment extends Fragment {
 
@@ -44,7 +46,10 @@ public class GoTCharactersFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
-        new Thread(new Runnable() {
+        // TODO : just for testing the scaffolding, remove later
+        adapter.addAll(GoTCharacterModelMapper.transform(GoTInteractor.getCharacters()));
+
+        /*new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -80,7 +85,7 @@ public class GoTCharactersFragment extends Fragment {
 
 
             }
-        }).start();
+        }).start();*/
         return rootView;
     }
 }
