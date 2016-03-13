@@ -32,10 +32,12 @@ public class GoTHousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         mActivity = activity;
     }
 
-    public void addAll(Collection<GoTCharacterModel.GoTHouseModel> houses) {
-        for (int i = 0; i < houses.size(); i++) {
-            mHouses.add((GoTCharacterModel.GoTHouseModel) houses.toArray()[i]);
-        }
+    public void update(Collection<GoTCharacterModel.GoTHouseModel> houses) {
+        if ((houses == null) || (mHouses == null))
+            return;
+
+        mHouses.clear();
+        mHouses.addAll(houses);
     }
 
     @Override

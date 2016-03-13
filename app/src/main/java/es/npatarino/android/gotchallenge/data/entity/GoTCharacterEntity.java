@@ -1,11 +1,12 @@
 package es.npatarino.android.gotchallenge.data.entity;
 
 import com.google.gson.annotations.SerializedName;
+import com.orm.SugarRecord;
 
 /**
  * GoTCharacterEntity encapsulates a character data model in the data layer
  */
-public class GoTCharacterEntity {
+public class GoTCharacterEntity extends SugarRecord {
 
     @SerializedName("name")
     private String mName;

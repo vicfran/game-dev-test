@@ -12,9 +12,9 @@ import com.squareup.otto.Subscribe;
 
 import java.util.List;
 
-import es.npatarino.android.gotchallenge.observer.GoTEvent;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.domain.interactor.GoTInteractor;
+import es.npatarino.android.gotchallenge.observer.GoTEvent;
 import es.npatarino.android.gotchallenge.presentation.adapter.GoTCharactersAdapter;
 import es.npatarino.android.gotchallenge.presentation.model.GoTCharacterModel;
 import es.npatarino.android.gotchallenge.presentation.model.mapper.GoTCharacterModelMapper;
@@ -25,6 +25,8 @@ public class GoTCharactersFragment extends BaseFragment {
 
     private GoTCharactersAdapter adapter;
     private ContentLoadingProgressBar progressBar;
+
+    private List<GoTCharacterModel> mCharacters;
 
     public GoTCharactersFragment() {}
 
@@ -46,23 +48,24 @@ public class GoTCharactersFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        refresh();
+
+        update();
     }
 
     @Override
     @Subscribe
     public void update(GoTEvent event) {
         if (event.getType() == GoTEvent.CHARACTERS_UPDATE)
-            refresh();
+            update();
     }
 
-    private void refresh() {
-        List<GoTCharacterModel> characters = GoTCharacterModelMapper.transform(GoTInteractor.getCharacters());
+    private void update() {
+        mCharacters = GoTCharacterModelMapper.transform(GoTInteractor.getCharacters());
 
-        if (characters == null)
+        if (mCharacters == null)
             return;
 
-        adapter.addAll(characters);
+        adapter.update(mCharacters);
 
         adapter.notifyDataSetChanged();
         progressBar.hide();

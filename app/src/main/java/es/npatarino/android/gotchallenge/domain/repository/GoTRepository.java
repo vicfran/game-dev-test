@@ -10,4 +10,5 @@ import es.npatarino.android.gotchallenge.domain.GoTCharacter;
 public interface GoTRepository {
 
     List<GoTCharacter> characters();
+
 }

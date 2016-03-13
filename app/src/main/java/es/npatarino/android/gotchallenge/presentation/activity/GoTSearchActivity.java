@@ -66,18 +66,19 @@ public class GoTSearchActivity extends BaseActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
 
-        refresh();
+        update();
     }
 
-    private void refresh() {
+    private void update() {
         mCharacters = GoTCharacterModelMapper.transform(GoTInteractor.getCharactersByName(mNameQuery));
 
         if (mCharacters == null)
             return;
 
-        mAdapter.addAll(mCharacters);
+        mAdapter.update(mCharacters);
 
         mAdapter.notifyDataSetChanged();
+        mProgressBar.hide();
 
         checkResults();
     }

@@ -26,6 +26,8 @@ public class GoTHousesFragment extends BaseFragment {
     private GoTHousesAdapter adapter;
     private ContentLoadingProgressBar progressBar;
 
+    private List<GoTCharacterModel.GoTHouseModel> mHouses;
+
     public GoTHousesFragment() {}
 
     @Override
@@ -46,23 +48,24 @@ public class GoTHousesFragment extends BaseFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        refresh();
+
+        update();
     }
 
     @Override
     @Subscribe
     public void update(GoTEvent event) {
         if (event.getType() == GoTEvent.CHARACTERS_UPDATE)
-            refresh();
+            update();
     }
 
-    private void refresh() {
-        List<GoTCharacterModel.GoTHouseModel> houses = GoTHouseModelMapper.transform(GoTInteractor.getHouses());
+    private void update() {
+        mHouses = GoTHouseModelMapper.transform(GoTInteractor.getHouses());
 
-        if (houses == null)
+        if (mHouses == null)
             return;
 
-        adapter.addAll(houses);
+        adapter.update(mHouses);
 
         adapter.notifyDataSetChanged();
         progressBar.hide();

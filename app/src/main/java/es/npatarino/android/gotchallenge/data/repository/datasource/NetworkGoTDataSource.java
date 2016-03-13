@@ -29,6 +29,8 @@ public class NetworkGoTDataSource implements GoTDataSource, GoTObservable {
     private static final String BASE_URL =
             "http://ec2-52-18-202-124.eu-west-1.compute.amazonaws.com:3000/characters";
 
+    private static NetworkGoTDataSource INSTANCE = null;
+
     private static final Bus sBus =
             GoTChallengueApplication.getBus();
 
@@ -39,9 +41,16 @@ public class NetworkGoTDataSource implements GoTDataSource, GoTObservable {
     // TODO : just a test, some kind of "cache", need to improve
     private boolean updated = false;
 
-    public NetworkGoTDataSource() {
+    private NetworkGoTDataSource() {
         mMapper = new GoTCharacterEntityJsonMapper();
         mCharacters = new ArrayList<>();
+    }
+
+    public static NetworkGoTDataSource getInstance() {
+        if (INSTANCE == null)
+            INSTANCE = new NetworkGoTDataSource();
+
+        return INSTANCE;
     }
 
     @Override
@@ -63,37 +72,38 @@ public class NetworkGoTDataSource implements GoTDataSource, GoTObservable {
     private List<GoTCharacterEntity> getCharactersFromService() {
         // TODO : manage network connection in a better way
         // This piece of code is legacy from old GoTListFragment
-        if (!updated) {
-            new Thread(new Runnable() {
+        new Thread(new Runnable() {
 
-                @Override
-                public void run() {
-                    URL url = null;
-                    try {
-                        url = new URL(BASE_URL);
-                        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                        connection.setRequestMethod("GET");
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                        String inputLine;
-                        StringBuffer response = new StringBuffer();
-                        while ((inputLine = reader.readLine()) != null) {
-                            response.append(inputLine);
-                        }
-                        reader.close();
-
-                        mCharacters = mMapper.transformList(response.toString());
-
-                        notifyEvent();
-                    } catch (IOException e) {
-                        Log.e(TAG, e.getLocalizedMessage());
+            @Override
+            public void run() {
+                URL url = null;
+                try {
+                    url = new URL(BASE_URL);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String inputLine;
+                    StringBuffer response = new StringBuffer();
+                    while ((inputLine = reader.readLine()) != null) {
+                        response.append(inputLine);
                     }
+                    reader.close();
 
+                    mCharacters = mMapper.transformList(response.toString());
 
+                    // TODO : DB testing, mange better
+                    GoTCharacterEntity.deleteAll(GoTCharacterEntity.class);
+                    GoTCharacterEntity.saveInTx(mCharacters);
+                    CacheGoTPolicy.updateLastAccessTime();
+
+                    notifyEvent();
+                } catch (IOException e) {
+                    Log.e(TAG, e.getLocalizedMessage());
                 }
-            }).start();
 
-            updated = true;
-        }
+
+            }
+        }).start();
 
         return mCharacters;
     }

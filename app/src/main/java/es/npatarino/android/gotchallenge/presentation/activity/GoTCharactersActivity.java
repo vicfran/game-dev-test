@@ -30,6 +30,7 @@ public class GoTCharactersActivity extends BaseActivity {
 
     private GoTCharactersAdapter mAdapter;
 
+    private List<GoTCharacterModel> mCharacters;
     private GoTCharacter.GoTHouse mHouse;
 
     @Override
@@ -57,16 +58,16 @@ public class GoTCharactersActivity extends BaseActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(mAdapter);
 
-        refresh();
+        update();
     }
 
-    private void refresh() {
-        List<GoTCharacterModel> characters = GoTCharacterModelMapper.transform(GoTInteractor.getCharactersOfHouse(mHouse));
+    private void update() {
+        mCharacters = GoTCharacterModelMapper.transform(GoTInteractor.getCharactersOfHouse(mHouse));
 
-        if (characters == null)
+        if (mCharacters == null)
             return;
 
-        mAdapter.addAll(characters);
+        mAdapter.update(mCharacters);
 
         mAdapter.notifyDataSetChanged();
         mProgressBar.hide();

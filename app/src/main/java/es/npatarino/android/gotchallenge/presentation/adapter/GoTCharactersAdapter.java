@@ -32,10 +32,12 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
         mActivity = activity;
     }
 
-    public void addAll(Collection<GoTCharacterModel> characters) {
-        for (int i = 0; i < characters.size(); i++) {
-            mCharacters.add((GoTCharacterModel) characters.toArray()[i]);
-        }
+    public void update(Collection<GoTCharacterModel> characters) {
+        if ((characters == null) || (mCharacters == null))
+            return;
+
+        mCharacters.clear();
+        mCharacters.addAll(characters);
     }
 
     @Override
