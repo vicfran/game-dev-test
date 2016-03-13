@@ -1,7 +1,5 @@
 package es.npatarino.android.gotchallenge.domain.interactor;
 
-import android.text.TextUtils;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +42,10 @@ public final class GoTInteractor {
         return findCharactersFromHouse(house);
     }
 
+    public static List<GoTCharacter> getCharactersByName(String name) {
+        return findCharactersByName(name);
+    }
+
     // TODO : check about move this logic to repository itself
     private static List<GoTCharacter.GoTHouse> findHousesFromCharacters(List<GoTCharacter> characters) {
         List<GoTCharacter.GoTHouse> houses = new ArrayList<>();
@@ -79,13 +81,33 @@ public final class GoTInteractor {
         if (house == null)
             return characters;
 
-        for (GoTCharacter character : getCharacters()) {
+        List<GoTCharacter> data = getCharacters();
+        for (GoTCharacter character : data) {
             String id = character.getHouseId();
 
-            if (TextUtils.isEmpty(id))
+            if ((id == null) || (id.isEmpty()))
                 continue;
 
             if (id.equals(house.getId()))
+                characters.add(character);
+        }
+
+        return characters;
+    }
+
+    private static List<GoTCharacter> findCharactersByName(String name) {
+        List<GoTCharacter> characters = new ArrayList<>();
+
+        if ((name == null) || (name.isEmpty()))
+            return characters;
+
+        // Ignore queries too short
+        if (name.length() < 3)
+            return characters;
+
+        List<GoTCharacter> data = getCharacters();
+        for (GoTCharacter character : data) {
+            if (character.getName().toLowerCase().contains(name.toLowerCase()))
                 characters.add(character);
         }
 
