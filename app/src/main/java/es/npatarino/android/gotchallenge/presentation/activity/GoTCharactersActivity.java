@@ -5,7 +5,6 @@ import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class GoTCharactersActivity extends BaseActivity {
     @Bind(R.id.progress_bar)
     ContentLoadingProgressBar mProgressBar;
 
-    private GoTCharactersAdapter adapter;
+    private GoTCharactersAdapter mAdapter;
 
     private GoTCharacter.GoTHouse mHouse;
 
@@ -52,11 +51,11 @@ public class GoTCharactersActivity extends BaseActivity {
 
         mHouse = new GoTCharacter.GoTHouse(id, name, imageUrl);
 
-        adapter = new GoTCharactersAdapter(this);
+        mAdapter = new GoTCharactersAdapter(this);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setAdapter(adapter);
+        mRecyclerView.setAdapter(mAdapter);
 
         refresh();
     }
@@ -67,9 +66,9 @@ public class GoTCharactersActivity extends BaseActivity {
         if (characters == null)
             return;
 
-        adapter.addAll(characters);
+        mAdapter.addAll(characters);
 
-        adapter.notifyDataSetChanged();
+        mAdapter.notifyDataSetChanged();
         mProgressBar.hide();
     }
 }

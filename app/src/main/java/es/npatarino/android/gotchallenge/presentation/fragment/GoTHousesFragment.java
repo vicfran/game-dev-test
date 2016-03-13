@@ -29,13 +29,6 @@ public class GoTHousesFragment extends BaseFragment {
     public GoTHousesFragment() {}
 
     @Override
-    public void onResume() {
-        super.onResume();
-
-        refresh();
-    }
-
-    @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
         progressBar = (ContentLoadingProgressBar) rootView.findViewById(R.id.progress_bar);
@@ -48,6 +41,12 @@ public class GoTHousesFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
 
         return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        refresh();
     }
 
     @Override
