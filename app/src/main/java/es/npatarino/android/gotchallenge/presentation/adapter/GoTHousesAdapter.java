@@ -1,6 +1,7 @@
 package es.npatarino.android.gotchallenge.presentation.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,8 @@ import java.util.Collection;
 import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
+import es.npatarino.android.gotchallenge.presentation.activity.GoTCharacterActivity;
+import es.npatarino.android.gotchallenge.presentation.activity.GoTCharactersActivity;
 import es.npatarino.android.gotchallenge.presentation.model.GoTCharacterModel;
 
 public class GoTHousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -44,6 +47,16 @@ public class GoTHousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         GotHouseViewHolder houseViewHolder = (GotHouseViewHolder) holder;
         houseViewHolder.render(mHouses.get(position));
+        ((GotHouseViewHolder) holder).backgroundImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                Intent intent = new Intent(((GotHouseViewHolder) holder).itemView.getContext(), GoTCharactersActivity.class);
+                intent.putExtra("id", mHouses.get(position).getId());
+                intent.putExtra("name", mHouses.get(position).name);
+                intent.putExtra("imageUrl", mHouses.get(position).imageUrl);
+                ((GotHouseViewHolder) holder).itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override
