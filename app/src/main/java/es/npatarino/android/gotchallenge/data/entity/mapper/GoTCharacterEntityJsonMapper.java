@@ -34,9 +34,6 @@ public class GoTCharacterEntityJsonMapper {
         if (TextUtils.isEmpty(json))
             return entity;
 
-        if (TextUtils.isEmpty(json))
-            return entity;
-
         Type entityType = new TypeToken<GoTCharacterEntity>() {}.getType();
 
         try {
