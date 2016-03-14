@@ -27,7 +27,6 @@ public class GoTCharacterActivity extends BaseActivity {
         setContentView(R.layout.activity_detail);
 
         final ImageView photoImageView = (ImageView) findViewById(R.id.img_photo);
-        final TextView nameTextView = (TextView) findViewById(R.id.lbl_name);
         final TextView descriptionTextView = (TextView) findViewById(R.id.lbl_description);
 
         final String description = getIntent().getStringExtra("description");
@@ -41,7 +40,6 @@ public class GoTCharacterActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        nameTextView.setText(name);
         descriptionTextView.setText(description);
 
         new Thread(new Runnable() {

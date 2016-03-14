@@ -72,9 +72,8 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     private ActivityOptionsCompat buildTransitionOptions(RecyclerView.ViewHolder holder) {
-        Pair[] pairs = new Pair[2];
-        pairs[0] = Pair.create(((GotCharacterViewHolder) holder).nameTextView, "character_name");
-        pairs[1] = Pair.create(((GotCharacterViewHolder) holder).backgroundImageView, "character_image");
+        Pair[] pairs = new Pair[1];
+        pairs[0] = Pair.create(((GotCharacterViewHolder) holder).backgroundImageView, "character_image");
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 mActivity,
                 pairs
