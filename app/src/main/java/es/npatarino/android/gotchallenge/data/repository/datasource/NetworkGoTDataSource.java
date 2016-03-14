@@ -1,5 +1,8 @@
 package es.npatarino.android.gotchallenge.data.repository.datasource;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.squareup.otto.Bus;
@@ -30,6 +33,9 @@ public class NetworkGoTDataSource implements GoTDataSource, GoTObservable {
             "http://ec2-52-18-202-124.eu-west-1.compute.amazonaws.com:3000/characters";
 
     private static NetworkGoTDataSource INSTANCE = null;
+
+    private static final Context sContext =
+            GoTChallengueApplication.getContext();
 
     private static final Bus sBus =
             GoTChallengueApplication.getBus();
@@ -67,6 +73,13 @@ public class NetworkGoTDataSource implements GoTDataSource, GoTObservable {
                 sBus.post(new GoTCharactersUpdate());
             }
         });
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) sContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return ((networkInfo != null) &&
+                (networkInfo.isConnected()));
     }
 
     private List<GoTCharacterEntity> getCharactersFromService() {

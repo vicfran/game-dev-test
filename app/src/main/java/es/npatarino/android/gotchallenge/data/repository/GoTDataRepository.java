@@ -30,10 +30,11 @@ public class GoTDataRepository implements GoTRepository {
     }
 
     private GoTDataSource getBestDataSource() {
-        if (CacheGoTPolicy.isCacheExpired())
-            mGoTDataSource = NetworkGoTDataSource.getInstance();
-        else
+        if ((!NetworkGoTDataSource.getInstance().isNetworkAvailable()) ||
+                (!CacheGoTPolicy.isCacheExpired()))
             mGoTDataSource = CacheGoTDataSource.getInstance();
+        else
+            mGoTDataSource = NetworkGoTDataSource.getInstance();
 
         return mGoTDataSource;
     }

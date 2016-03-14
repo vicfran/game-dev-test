@@ -79,6 +79,8 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
         public void render(final GoTCharacterModel character) {
+            nameTextView.setText(character.name);
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -90,7 +92,6 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
                             @Override
                             public void run() {
                                 backgroundImageView.setImageBitmap(background);
-                                nameTextView.setText(character.name);
                             }
                         });
                     } catch (IOException e) {

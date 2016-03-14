@@ -39,6 +39,9 @@ public class GoTCharacterActivity extends BaseActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        nameTextView.setText(name);
+        descriptionTextView.setText(description);
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -50,8 +53,6 @@ public class GoTCharacterActivity extends BaseActivity {
                         @Override
                         public void run() {
                             photoImageView.setImageBitmap(photo);
-                            nameTextView.setText(name);
-                            descriptionTextView.setText(description);
                         }
                     });
                 } catch (IOException e) {
