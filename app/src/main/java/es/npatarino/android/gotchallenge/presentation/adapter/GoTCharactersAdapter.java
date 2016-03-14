@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,7 +58,10 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
                 intent.putExtra("description", mCharacters.get(position).description);
                 intent.putExtra("name", mCharacters.get(position).name);
                 intent.putExtra("imageUrl", mCharacters.get(position).imageUrl);
-                ((GotCharacterViewHolder) holder).itemView.getContext().startActivity(intent);
+
+                ActivityOptionsCompat options = buildTransitionOptions(holder);
+
+                ((GotCharacterViewHolder) holder).itemView.getContext().startActivity(intent, options.toBundle());
             }
         });
     }
@@ -64,6 +69,18 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public int getItemCount() {
         return mCharacters.size();
+    }
+
+    private ActivityOptionsCompat buildTransitionOptions(RecyclerView.ViewHolder holder) {
+        Pair[] pairs = new Pair[2];
+        pairs[0] = Pair.create(((GotCharacterViewHolder) holder).nameTextView, "character_name");
+        pairs[1] = Pair.create(((GotCharacterViewHolder) holder).backgroundImageView, "character_image");
+        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                mActivity,
+                pairs
+        );
+
+        return options;
     }
 
     class GotCharacterViewHolder extends RecyclerView.ViewHolder {
