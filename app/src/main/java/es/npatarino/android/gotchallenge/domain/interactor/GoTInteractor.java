@@ -1,5 +1,7 @@
 package es.npatarino.android.gotchallenge.domain.interactor;
 
+import android.text.TextUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,22 +54,34 @@ public final class GoTInteractor {
         if (characters == null)
             return houses;
 
-        for (int i = 0; i < characters.size(); i++) {
+        for (GoTCharacter character : characters) {
             boolean houseExists = false;
-            for (int j = 0; j < houses.size(); j++) {
-                if (houses.get(j).getName().equalsIgnoreCase(characters.get(i).getName())) {
+            for (GoTCharacter.GoTHouse house : houses) {
+                String characterHouseName = character.getHouseName();
+                String houseName = house.getName();
+
+                // Filter houses with empty data
+                if ((TextUtils.isEmpty(characterHouseName)) ||
+                        (TextUtils.isEmpty(houseName)))
+                    continue;
+                if (houseName.equalsIgnoreCase(characterHouseName)) {
                     houseExists = true;
+                    break;
                 }
             }
             if (!houseExists) {
-                if (characters.get(i).getImageUrl() != null && !characters.get(i).getImageUrl().isEmpty()) {
-                    GoTCharacter.GoTHouse house = new GoTCharacter.GoTHouse();
-                    house.setId(characters.get(i).getHouseId());
-                    house.setName(characters.get(i).getHouseName());
-                    house.setImageUrl(characters.get(i).getHouseUrl());
-                    houses.add(house);
-                    houseExists = false;
-                }
+                GoTCharacter.GoTHouse house = new GoTCharacter.GoTHouse();
+                house.setId(character.getHouseId());
+                house.setName(character.getHouseName());
+                house.setImageUrl(character.getHouseUrl());
+
+                // If new house has any empty or null data, avoid adding it to the list
+                if (TextUtils.isEmpty(house.getId()) ||
+                        TextUtils.isEmpty(house.getName()) ||
+                        TextUtils.isEmpty(house.getImageUrl()))
+                    continue;
+
+                houses.add(house);
             }
         }
 
