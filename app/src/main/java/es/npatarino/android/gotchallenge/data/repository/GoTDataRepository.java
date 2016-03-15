@@ -16,17 +16,14 @@ import es.npatarino.android.gotchallenge.domain.repository.GoTRepository;
 public class GoTDataRepository implements GoTRepository {
 
     private GoTDataSource mGoTDataSource;
-    private GoTCharacterEntityDataMapper mMapper;
 
-    public GoTDataRepository() {
-        mMapper = new GoTCharacterEntityDataMapper();
-    }
+    public GoTDataRepository() {}
 
     @Override
     public List<GoTCharacter> characters() {
         mGoTDataSource = getBestDataSource();
 
-        return mMapper.transform(mGoTDataSource.characterEntities());
+        return GoTCharacterEntityDataMapper.transform(mGoTDataSource.characterEntities());
     }
 
     private GoTDataSource getBestDataSource() {

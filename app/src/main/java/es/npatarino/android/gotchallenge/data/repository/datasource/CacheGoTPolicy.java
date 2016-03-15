@@ -18,6 +18,8 @@ public final class CacheGoTPolicy {
             GoTChallengueApplication.getContext().getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
     private static final SharedPreferences.Editor sEditor = sPreferences.edit();
 
+    private CacheGoTPolicy() {}
+
     public static void updateLastAccessTime() {
         sEditor.putLong(LAST_ACCESS_TIME_KEY, System.currentTimeMillis()).apply();
     }

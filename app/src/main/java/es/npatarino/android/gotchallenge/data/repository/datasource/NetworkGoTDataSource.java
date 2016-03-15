@@ -40,12 +40,9 @@ public class NetworkGoTDataSource implements GoTDataSource, GoTObservable {
     private static final Bus sBus =
             GoTChallengueApplication.getBus();
 
-    private GoTCharacterEntityJsonMapper mMapper;
-
     private List<GoTCharacterEntity> mCharacters;
 
     private NetworkGoTDataSource() {
-        mMapper = new GoTCharacterEntityJsonMapper();
         mCharacters = new ArrayList<>();
     }
 
@@ -99,7 +96,7 @@ public class NetworkGoTDataSource implements GoTDataSource, GoTObservable {
                     }
                     reader.close();
 
-                    mCharacters = mMapper.transformList(response.toString());
+                    mCharacters = GoTCharacterEntityJsonMapper.transformList(response.toString());
 
                     GoTCharacterEntity.deleteAll(GoTCharacterEntity.class);
                     GoTCharacterEntity.saveInTx(mCharacters);

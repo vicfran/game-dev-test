@@ -6,7 +6,10 @@ import java.util.List;
 import es.npatarino.android.gotchallenge.domain.GoTCharacter;
 import es.npatarino.android.gotchallenge.presentation.model.GoTCharacterModel;
 
-public class GoTHouseModelMapper {
+/**
+ * Transforms {@link GoTCharacter.GoTHouse} from domain layer to {@link GoTCharacterModel.GoTHouseModel} of presentation layer
+ */
+public final class GoTHouseModelMapper {
 
     private GoTHouseModelMapper() {}
 

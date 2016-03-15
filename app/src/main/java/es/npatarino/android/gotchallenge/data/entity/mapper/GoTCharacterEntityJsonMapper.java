@@ -15,20 +15,18 @@ import es.npatarino.android.gotchallenge.data.entity.GoTCharacterEntity;
 /**
  * Transforms JSON data to {@link GoTCharacterEntity} objects
  */
-public class GoTCharacterEntityJsonMapper {
+public final class GoTCharacterEntityJsonMapper {
 
-    private Gson mGson;
+    private static Gson mGson = new Gson();
 
-    public GoTCharacterEntityJsonMapper() {
-        mGson = new Gson();
-    }
+    private GoTCharacterEntityJsonMapper() {}
 
     /**
      * Transforms a JSON into a {@link GoTCharacterEntity}
      * @param json JSON representing a {@link GoTCharacterEntity}
      * @return {@link GoTCharacterEntity} obtained from a JSON
      */
-    public GoTCharacterEntity transform(String json) {
+    public static GoTCharacterEntity transform(String json) {
         GoTCharacterEntity entity = new GoTCharacterEntity();
 
         if (TextUtils.isEmpty(json))
@@ -50,7 +48,7 @@ public class GoTCharacterEntityJsonMapper {
      * @param json JSON representing a {@link List} of {@link GoTCharacterEntity}
      * @return {@link List} of {@link GoTCharacterEntity} obtained from a JSON
      */
-    public List<GoTCharacterEntity> transformList(String json) {
+    public static List<GoTCharacterEntity> transformList(String json) {
         List<GoTCharacterEntity> entities = new ArrayList<>();
 
         if (TextUtils.isEmpty(json))
