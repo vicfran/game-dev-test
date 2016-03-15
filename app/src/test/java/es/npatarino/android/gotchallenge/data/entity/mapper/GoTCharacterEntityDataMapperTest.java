@@ -35,21 +35,18 @@ public class GoTCharacterEntityDataMapperTest {
     private static final String HOUSE_IMAGE_URL = "house_image_url";
     private static final String OTHER_HOUSE_IMAGE_URL = "other_house_image_url";
 
-    private GoTCharacterEntityDataMapper mMapper;
-
     private GoTCharacterEntity mGoTCharacterEntity;
     private List<GoTCharacterEntity> mGoTCharacterEntities;
 
     @Before
     public void setUp() {
-        mMapper = new GoTCharacterEntityDataMapper();
         mGoTCharacterEntity = buildGoTCharacterEntity();
         mGoTCharacterEntities = buildGoTCharacterEntities();
     }
 
     @Test
     public void testTransformGoTCharacterEntitySuccesful() throws Exception {
-        GoTCharacter goTCharacter = mMapper.transform(mGoTCharacterEntity);
+        GoTCharacter goTCharacter = GoTCharacterEntityDataMapper.transform(mGoTCharacterEntity);
 
         assertEquals(NAME, goTCharacter.getName());
         assertEquals(DESCRIPTION, goTCharacter.getDescription());
@@ -61,7 +58,7 @@ public class GoTCharacterEntityDataMapperTest {
 
     @Test
     public void testTransformGoTCharacterEntityUnsuccesful() throws Exception {
-        GoTCharacter goTCharacter = mMapper.transform(mGoTCharacterEntity);
+        GoTCharacter goTCharacter = GoTCharacterEntityDataMapper.transform(mGoTCharacterEntity);
         GoTCharacter incorrectGoTCharacter = buildIncorrectGoTCharacter();
 
         assertNotEquals(incorrectGoTCharacter.getName(), goTCharacter.getName());
@@ -74,7 +71,7 @@ public class GoTCharacterEntityDataMapperTest {
 
     @Test
     public void testTransformGoTCharacterEntitiesSuccesful() throws Exception {
-        List<GoTCharacter> goTCharacters = mMapper.transform(mGoTCharacterEntities);
+        List<GoTCharacter> goTCharacters = GoTCharacterEntityDataMapper.transform(mGoTCharacterEntities);
 
         for (GoTCharacter goTCharacter : goTCharacters) {
             assertEquals(NAME, goTCharacter.getName());
@@ -88,7 +85,7 @@ public class GoTCharacterEntityDataMapperTest {
 
     @Test
     public void testTransformGoTCharacterEntitiesUnsuccesful() throws Exception {
-        List<GoTCharacter> goTCharacters = mMapper.transform(mGoTCharacterEntities);
+        List<GoTCharacter> goTCharacters = GoTCharacterEntityDataMapper.transform(mGoTCharacterEntities);
         List<GoTCharacter> incorrectGoTCharacters = buildIncorrectGoTCharacters();
 
         for (int i = 0; i < 5; i++) {
