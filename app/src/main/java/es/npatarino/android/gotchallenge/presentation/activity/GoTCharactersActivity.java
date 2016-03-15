@@ -1,5 +1,6 @@
 package es.npatarino.android.gotchallenge.presentation.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,6 +34,10 @@ public class GoTCharactersActivity extends BaseActivity {
     private List<GoTCharacterModel> mCharacters;
     private GoTCharacter.GoTHouse mHouse;
 
+    private String mHouseId = "";
+    private String mHouseName = "";
+    private String mHouseImageUrl = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,17 +45,14 @@ public class GoTCharactersActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        final String id = getIntent().getStringExtra("id");
-        final String name = getIntent().getStringExtra("name");
-        final String imageUrl = getIntent().getStringExtra("imageUrl");
+        getDataFromIntent(getIntent());
 
-        mToolbar.setTitle(name);
+        mToolbar.setTitle(mHouseName);
         setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null) {
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
-        mHouse = new GoTCharacter.GoTHouse(id, name, imageUrl);
+        mHouse = new GoTCharacter.GoTHouse(mHouseId, mHouseName, mHouseImageUrl);
 
         mAdapter = new GoTCharactersAdapter(this);
 
@@ -61,7 +63,19 @@ public class GoTCharactersActivity extends BaseActivity {
         update();
     }
 
+    private void getDataFromIntent(Intent intent) {
+        if (intent == null)
+            return;
+
+        mHouseId = intent.getStringExtra("id");
+        mHouseName = intent.getStringExtra("name");
+        mHouseImageUrl = intent.getStringExtra("imageUrl");
+    }
+
     private void update() {
+        if (mHouse == null)
+            return;
+
         mCharacters = GoTCharacterModelMapper.transform(GoTInteractor.getCharactersOfHouse(mHouse));
 
         if (mCharacters == null)

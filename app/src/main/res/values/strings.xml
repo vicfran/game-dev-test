@@ -3,6 +3,9 @@
     <string name="app_name">GoT - Challenge</string>
     <string name="title_activity_home">Game of Thrones</string>
 
+    <string name="characters">Characters</string>
+    <string name="houses">Houses</string>
+
     <string name="action_search">Search</string>
     <string name="search_hint">Search GoT character</string>
     <string name="search_result">Search of %1$s</string>

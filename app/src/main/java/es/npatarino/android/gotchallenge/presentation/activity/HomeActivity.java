@@ -12,35 +12,39 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.presentation.adapter.HomePagerAdapter;
 
 public class HomeActivity extends BaseActivity {
 
-    HomePagerAdapter mPagerAdapter;
-    ViewPager mViewPager;
+    @Bind(R.id.toolbar)
     Toolbar mToolbar;
+    @Bind(R.id.tabs)
     TabLayout mTabLayout;
+    @Bind(R.id.container)
+    ViewPager mViewPager;
+
+    private HomePagerAdapter mPagerAdapter;
 
     private SearchManager mSearchManager;
-    private SearchView searchView;
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        ButterKnife.bind(this);
+
         mSearchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        setPagerAdapter(new HomePagerAdapter(getSupportFragmentManager()));
 
-        setViewPager((ViewPager) findViewById(R.id.container));
-        getViewPager().setAdapter(getPagerAdapter());
-
-        mTabLayout = (TabLayout) findViewById(R.id.tabs);
-        mTabLayout.setupWithViewPager(getViewPager());
+        mPagerAdapter = new HomePagerAdapter(getSupportFragmentManager(), this);
+        mViewPager.setAdapter(mPagerAdapter);
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override
@@ -48,37 +52,25 @@ public class HomeActivity extends BaseActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.options_menu, menu);
 
-        final MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
         initSearchView(menu, searchItem);
 
         return true;
-    }
-
-    public HomePagerAdapter getPagerAdapter() {
-        return mPagerAdapter;
-    }
-
-    public void setPagerAdapter(HomePagerAdapter pagerAdapter) {
-        this.mPagerAdapter = pagerAdapter;
-    }
-
-    public ViewPager getViewPager() {
-        return mViewPager;
-    }
-
-    public void setViewPager(ViewPager viewPager) {
-        this.mViewPager = viewPager;
     }
 
     private void initSearchView(Menu menu, final MenuItem menuItem) {
         if ((menu == null) || (menuItem == null))
             return;
 
-        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(mSearchManager.getSearchableInfo(
+        mSearchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+        if (mSearchView == null)
+            return;
+
+        mSearchView.setSearchableInfo(mSearchManager.getSearchableInfo(
                 new ComponentName(getApplicationContext(), GoTSearchActivity.class)));
-        searchView.setIconifiedByDefault(true);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        mSearchView.setIconifiedByDefault(true);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             public boolean onQueryTextChange(String arg0) {
                 return false;
             }

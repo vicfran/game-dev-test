@@ -23,8 +23,10 @@ public class GoTHousesFragment extends BaseFragment {
 
     private static final String TAG = "GoTHousesFragment";
 
-    private GoTHousesAdapter adapter;
-    private ContentLoadingProgressBar progressBar;
+    private GoTHousesAdapter mAdapter;
+
+    private RecyclerView mRecyclerView;
+    private ContentLoadingProgressBar mProgressBar;
 
     private List<GoTCharacterModel.GoTHouseModel> mHouses;
 
@@ -33,14 +35,15 @@ public class GoTHousesFragment extends BaseFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
-        progressBar = (ContentLoadingProgressBar) rootView.findViewById(R.id.progress_bar);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        adapter = new GoTHousesAdapter(getActivity());
+        mProgressBar = (ContentLoadingProgressBar) rootView.findViewById(R.id.progress_bar);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+        mAdapter = new GoTHousesAdapter(getActivity());
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(mAdapter);
 
         return rootView;
     }
@@ -65,9 +68,9 @@ public class GoTHousesFragment extends BaseFragment {
         if (mHouses == null)
             return;
 
-        adapter.update(mHouses);
+        mAdapter.update(mHouses);
 
-        adapter.notifyDataSetChanged();
-        progressBar.hide();
+        mAdapter.notifyDataSetChanged();
+        mProgressBar.hide();
     }
 }

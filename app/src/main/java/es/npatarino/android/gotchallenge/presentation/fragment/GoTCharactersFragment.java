@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.squareup.otto.Subscribe;
 
 import java.util.List;
+import java.util.concurrent.RecursiveAction;
 
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.domain.interactor.GoTInteractor;
@@ -23,8 +24,10 @@ public class GoTCharactersFragment extends BaseFragment {
 
     private static final String TAG = "CharactersListFragment";
 
-    private GoTCharactersAdapter adapter;
-    private ContentLoadingProgressBar progressBar;
+    private GoTCharactersAdapter mAdapter;
+
+    private RecyclerView mRecyclerView;
+    private ContentLoadingProgressBar mProgressBar;
 
     private List<GoTCharacterModel> mCharacters;
 
@@ -33,14 +36,15 @@ public class GoTCharactersFragment extends BaseFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
-        progressBar = (ContentLoadingProgressBar) rootView.findViewById(R.id.progress_bar);
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        adapter = new GoTCharactersAdapter(getActivity());
+        mProgressBar = (ContentLoadingProgressBar) rootView.findViewById(R.id.progress_bar);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
+        mAdapter = new GoTCharactersAdapter(getActivity());
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setAdapter(mAdapter);
 
         return rootView;
     }
@@ -65,9 +69,9 @@ public class GoTCharactersFragment extends BaseFragment {
         if (mCharacters == null)
             return;
 
-        adapter.update(mCharacters);
+        mAdapter.update(mCharacters);
 
-        adapter.notifyDataSetChanged();
-        progressBar.hide();
+        mAdapter.notifyDataSetChanged();
+        mProgressBar.hide();
     }
 }

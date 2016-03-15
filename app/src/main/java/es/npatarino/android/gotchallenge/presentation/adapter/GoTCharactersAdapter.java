@@ -16,30 +16,15 @@ import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.presentation.activity.GoTCharacterActivity;
 import es.npatarino.android.gotchallenge.presentation.model.GoTCharacterModel;
 
-public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private final List<GoTCharacterModel> mCharacters;
-    private Activity mActivity;
+public class GoTCharactersAdapter extends GoTBaseAdapter<GoTCharacterModel> {
 
     public GoTCharactersAdapter(Activity activity) {
-        this.mCharacters = new ArrayList<>();
-        mActivity = activity;
-    }
-
-    public void update(Collection<GoTCharacterModel> characters) {
-        if ((characters == null) || (mCharacters == null))
-            return;
-
-        mCharacters.clear();
-        mCharacters.addAll(characters);
+        super(activity);
     }
 
     @Override
@@ -49,26 +34,38 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        GotCharacterViewHolder gotCharacterViewHolder = (GotCharacterViewHolder) holder;
-        gotCharacterViewHolder.render(mCharacters.get(position));
-        ((GotCharacterViewHolder) holder).backgroundImageView.setOnClickListener(new View.OnClickListener() {
+        GotCharacterViewHolder viewHolder = (GotCharacterViewHolder) holder;
+        configureViewHolderAtPosition(viewHolder, position);
+    }
+
+    @Override
+    public void configureViewHolderAtPosition(RecyclerView.ViewHolder viewHolder, final int position) {
+        final GotCharacterViewHolder characterViewHolder = (GotCharacterViewHolder) viewHolder;
+
+        characterViewHolder.render(mData.get(position));
+
+        characterViewHolder.backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Intent intent = new Intent(((GotCharacterViewHolder) holder).itemView.getContext(), GoTCharacterActivity.class);
-                intent.putExtra("description", mCharacters.get(position).description);
-                intent.putExtra("name", mCharacters.get(position).name);
-                intent.putExtra("imageUrl", mCharacters.get(position).imageUrl);
+                Intent intent = buildIntentForHolderAtPosition(characterViewHolder, position);
 
-                ActivityOptionsCompat options = buildTransitionOptions(holder);
+                ActivityOptionsCompat options = buildTransitionOptions(characterViewHolder);
 
-                ((GotCharacterViewHolder) holder).itemView.getContext().startActivity(intent, options.toBundle());
+                characterViewHolder.itemView.getContext().startActivity(intent, options.toBundle());
             }
         });
     }
 
     @Override
-    public int getItemCount() {
-        return mCharacters.size();
+    public Intent buildIntentForHolderAtPosition(RecyclerView.ViewHolder viewHolder, int position) {
+        final GotCharacterViewHolder characterViewHolder = (GotCharacterViewHolder) viewHolder;
+
+        Intent intent = new Intent((characterViewHolder.itemView.getContext()), GoTCharacterActivity.class);
+        intent.putExtra("name", mData.get(position).getName());
+        intent.putExtra("description", mData.get(position).getDescription());
+        intent.putExtra("imageUrl", mData.get(position).getImageUrl());
+
+        return intent;
     }
 
     private ActivityOptionsCompat buildTransitionOptions(RecyclerView.ViewHolder holder) {
@@ -85,8 +82,9 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
     class GotCharacterViewHolder extends RecyclerView.ViewHolder {
 
         private static final String TAG = "GotCharacterViewHolder";
-        ImageView backgroundImageView;
-        TextView nameTextView;
+
+        private ImageView backgroundImageView;
+        private TextView nameTextView;
 
         public GotCharacterViewHolder(View itemView) {
             super(itemView);
@@ -95,14 +93,17 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
         public void render(final GoTCharacterModel character) {
-            nameTextView.setText(character.name);
+            if (character == null)
+                return;
+
+            nameTextView.setText(character.getName());
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     URL url = null;
                     try {
-                        url = new URL(character.imageUrl);
+                        url = new URL(character.getImageUrl());
                         final Bitmap background = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                         mActivity.runOnUiThread(new Runnable() {
                             @Override
@@ -117,5 +118,4 @@ public class GoTCharactersAdapter extends RecyclerView.Adapter<RecyclerView.View
             }).start();
         }
     }
-
 }

@@ -1,11 +1,12 @@
 package es.npatarino.android.gotchallenge.presentation.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -14,52 +15,43 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.net.URL;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 
 public class GoTCharacterActivity extends BaseActivity {
 
-
     private static final String TAG = "GoTCharacterActivity";
+
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
+    @Bind(R.id.img_photo)
+    ImageView mPhotoImageView;
+    @Bind(R.id.lbl_description)
+    TextView mDescriptionTextView;
+
+    private String mName = "";
+    private String mDescription = "";
+    private String mImageUrl = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        final ImageView photoImageView = (ImageView) findViewById(R.id.img_photo);
-        final TextView descriptionTextView = (TextView) findViewById(R.id.lbl_description);
+        ButterKnife.bind(this);
 
-        final String description = getIntent().getStringExtra("description");
-        final String name = getIntent().getStringExtra("name");
-        final String imageUrl = getIntent().getStringExtra("imageUrl");
+        getDataFromIntent(getIntent());
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(name);
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar.setTitle(mName);
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
 
-        descriptionTextView.setText(description);
+        mDescriptionTextView.setText(mDescription);
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                URL url = null;
-                try {
-                    url = new URL(imageUrl);
-                    final Bitmap photo = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    GoTCharacterActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            photoImageView.setImageBitmap(photo);
-                        }
-                    });
-                } catch (IOException e) {
-                    Log.e(TAG, e.getLocalizedMessage());
-                }
-            }
-        }).start();
+        update();
     }
 
     @Override
@@ -76,5 +68,36 @@ public class GoTCharacterActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         ActivityCompat.finishAfterTransition(this);
+    }
+
+    private void getDataFromIntent(Intent intent) {
+        if (intent == null)
+            return;
+
+        mName = intent.getStringExtra("name");
+        mDescription = intent.getStringExtra("description");
+        mImageUrl = intent.getStringExtra("imageUrl");
+    }
+
+    private void update() {
+        if (!TextUtils.isEmpty(mImageUrl))
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    URL url = null;
+                    try {
+                        url = new URL(mImageUrl);
+                        final Bitmap photo = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                        GoTCharacterActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mPhotoImageView.setImageBitmap(photo);
+                            }
+                        });
+                    } catch (IOException e) {
+                        Log.e(TAG, e.getLocalizedMessage());
+                    }
+                }
+            }).start();
     }
 }

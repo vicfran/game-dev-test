@@ -13,31 +13,15 @@ import android.widget.ImageView;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
-import es.npatarino.android.gotchallenge.presentation.activity.GoTCharacterActivity;
 import es.npatarino.android.gotchallenge.presentation.activity.GoTCharactersActivity;
 import es.npatarino.android.gotchallenge.presentation.model.GoTCharacterModel;
 
-public class GoTHousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
-    private final List<GoTCharacterModel.GoTHouseModel> mHouses;
-    private Activity mActivity;
+public class GoTHousesAdapter extends GoTBaseAdapter<GoTCharacterModel.GoTHouseModel> {
 
     public GoTHousesAdapter(Activity activity) {
-        this.mHouses = new ArrayList<>();
-        mActivity = activity;
-    }
-
-    public void update(Collection<GoTCharacterModel.GoTHouseModel> houses) {
-        if ((houses == null) || (mHouses == null))
-            return;
-
-        mHouses.clear();
-        mHouses.addAll(houses);
+        super(activity);
     }
 
     @Override
@@ -47,29 +31,43 @@ public class GoTHousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        GotHouseViewHolder houseViewHolder = (GotHouseViewHolder) holder;
-        houseViewHolder.render(mHouses.get(position));
-        ((GotHouseViewHolder) holder).backgroundImageView.setOnClickListener(new View.OnClickListener() {
+        GotHouseViewHolder viewHolder = (GotHouseViewHolder) holder;
+        configureViewHolderAtPosition(viewHolder, position);
+    }
+
+    @Override
+    public void configureViewHolderAtPosition(RecyclerView.ViewHolder viewHolder, final int position) {
+        final GotHouseViewHolder houseViewHolder = (GotHouseViewHolder) viewHolder;
+
+        houseViewHolder.render(mData.get(position));
+
+        houseViewHolder.backgroundImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Intent intent = new Intent(((GotHouseViewHolder) holder).itemView.getContext(), GoTCharactersActivity.class);
-                intent.putExtra("id", mHouses.get(position).getId());
-                intent.putExtra("name", mHouses.get(position).name);
-                intent.putExtra("imageUrl", mHouses.get(position).imageUrl);
-                ((GotHouseViewHolder) holder).itemView.getContext().startActivity(intent);
+                Intent intent = buildIntentForHolderAtPosition(houseViewHolder, position);
+
+                houseViewHolder.itemView.getContext().startActivity(intent);
             }
         });
     }
 
     @Override
-    public int getItemCount() {
-        return mHouses.size();
+    public Intent buildIntentForHolderAtPosition(RecyclerView.ViewHolder viewHolder, int position) {
+        final GotHouseViewHolder houseViewHolder = (GotHouseViewHolder) viewHolder;
+
+        Intent intent = new Intent((houseViewHolder).itemView.getContext(), GoTCharactersActivity.class);
+        intent.putExtra("id", mData.get(position).getId());
+        intent.putExtra("name", mData.get(position).getName());
+        intent.putExtra("imageUrl", mData.get(position).getImageUrl());
+
+        return intent;
     }
 
     class GotHouseViewHolder extends RecyclerView.ViewHolder {
 
-        private static final String TAG = "GotHouseViewHolder";
-        ImageView backgroundImageView;
+        private static final String TAG = "GotViewHolder";
+
+        private ImageView backgroundImageView;
 
         public GotHouseViewHolder(View itemView) {
             super(itemView);
@@ -77,12 +75,15 @@ public class GoTHousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
 
         public void render(final GoTCharacterModel.GoTHouseModel house) {
+            if (house == null)
+                return;
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     URL url = null;
                     try {
-                        url = new URL(house.imageUrl);
+                        url = new URL(house.getImageUrl());
                         final Bitmap background = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                         mActivity.runOnUiThread(new Runnable() {
                             @Override

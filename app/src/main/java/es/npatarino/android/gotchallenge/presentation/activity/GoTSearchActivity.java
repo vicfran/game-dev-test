@@ -38,7 +38,7 @@ public class GoTSearchActivity extends BaseActivity {
     private GoTCharactersAdapter mAdapter;
     private List<GoTCharacterModel> mCharacters = new ArrayList<>();
 
-    private String mNameQuery;
+    private String mQuery = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +47,10 @@ public class GoTSearchActivity extends BaseActivity {
 
         ButterKnife.bind(this);
 
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            mNameQuery = intent.getStringExtra(SearchManager.QUERY);
-        }
+        mQuery = getQueryFromIntent(getIntent());
 
-        String title = TextUtils.isEmpty(mNameQuery) ?
-                getString(R.string.action_search) :
-                String.format(getString(R.string.search_result), mNameQuery);
+        String title = getTitleFromQuery(mQuery);
+
         mToolbar.setTitle(title);
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null)
@@ -69,8 +65,32 @@ public class GoTSearchActivity extends BaseActivity {
         update();
     }
 
+    private String getQueryFromIntent(Intent intent) {
+        String query = "";
+
+        if (intent == null)
+            return query;
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction()))
+            query = intent.getStringExtra(SearchManager.QUERY);
+
+        return query;
+    }
+
+    private String getTitleFromQuery(String query) {
+        String title = getString(R.string.action_search);
+
+        if (TextUtils.isEmpty(query))
+            return title;
+
+        return String.format(getString(R.string.search_result), query);
+    }
+
     private void update() {
-        mCharacters = GoTCharacterModelMapper.transform(GoTInteractor.getCharactersByName(mNameQuery));
+        if (mQuery == null)
+            return;
+
+        mCharacters = GoTCharacterModelMapper.transform(GoTInteractor.getCharactersByName(mQuery));
 
         if (mCharacters == null)
             return;
@@ -97,18 +117,22 @@ public class GoTSearchActivity extends BaseActivity {
     }
 
     private void hideEmptyView() {
-        mEmptyTextView.setVisibility(View.GONE);
+        if (mEmptyTextView != null)
+            mEmptyTextView.setVisibility(View.GONE);
     }
 
     private void showEmptyView() {
-        mEmptyTextView.setVisibility(View.VISIBLE);
+        if (mEmptyTextView != null)
+            mEmptyTextView.setVisibility(View.VISIBLE);
     }
 
     private void hideResultsView() {
-        mRecyclerView.setVisibility(View.GONE);
+        if (mRecyclerView != null)
+            mRecyclerView.setVisibility(View.GONE);
     }
 
     private void showResultsView() {
-        mRecyclerView.setVisibility(View.VISIBLE);
+        if (mRecyclerView != null)
+            mRecyclerView.setVisibility(View.VISIBLE);
     }
 }

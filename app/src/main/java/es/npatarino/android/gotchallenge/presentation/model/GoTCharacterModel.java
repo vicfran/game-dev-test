@@ -7,18 +7,12 @@ import com.google.gson.annotations.SerializedName;
  */
 public class GoTCharacterModel {
 
-    @SerializedName("name")
-    public String name;
-    @SerializedName("imageUrl")
-    public String imageUrl;
-    @SerializedName("description")
-    public String description;
-    @SerializedName("houseImageUrl")
-    public String houseUrl;
-    @SerializedName("houseName")
-    public String houseName;
-    @SerializedName("houseId")
-    public String houseId;
+    private String name;
+    private String imageUrl;
+    private String description;
+    private String houseUrl;
+    private String houseName;
+    private String houseId;
 
     public String getHouseUrl() {
         return houseUrl;
@@ -71,12 +65,9 @@ public class GoTCharacterModel {
 
     public static class GoTHouseModel {
 
-        @SerializedName("houseImageUrl")
-        public String imageUrl;
-        @SerializedName("houseName")
-        public String name;
-        @SerializedName("houseId")
-        public String id;
+        private String imageUrl;
+        private String name;
+        private String id;
 
         public String getImageUrl() {
             return imageUrl;
