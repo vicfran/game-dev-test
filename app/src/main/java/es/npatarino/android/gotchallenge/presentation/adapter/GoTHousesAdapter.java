@@ -2,17 +2,14 @@ package es.npatarino.android.gotchallenge.presentation.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import java.io.IOException;
-import java.net.URL;
+import com.squareup.picasso.Picasso;
 
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.presentation.activity.GoTCharactersActivity;
@@ -78,24 +75,11 @@ public class GoTHousesAdapter extends GoTBaseAdapter<GoTCharacterModel.GoTHouseM
             if (house == null)
                 return;
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    URL url = null;
-                    try {
-                        url = new URL(house.getImageUrl());
-                        final Bitmap background = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                backgroundImageView.setImageBitmap(background);
-                            }
-                        });
-                    } catch (IOException e) {
-                        Log.e(TAG, e.getLocalizedMessage());
-                    }
-                }
-            }).start();
+            String url = house.getImageUrl();
+            if (!TextUtils.isEmpty(url))
+                Picasso.with(mActivity)
+                        .load(url)
+                        .into(backgroundImageView);
         }
     }
 

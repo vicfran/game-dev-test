@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.net.URL;
 
@@ -81,23 +83,8 @@ public class GoTCharacterActivity extends BaseActivity {
 
     private void update() {
         if (!TextUtils.isEmpty(mImageUrl))
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    URL url = null;
-                    try {
-                        url = new URL(mImageUrl);
-                        final Bitmap photo = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                        GoTCharacterActivity.this.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mPhotoImageView.setImageBitmap(photo);
-                            }
-                        });
-                    } catch (IOException e) {
-                        Log.e(TAG, e.getLocalizedMessage());
-                    }
-                }
-            }).start();
+            Picasso.with(this)
+                    .load(mImageUrl)
+                    .into(mPhotoImageView);
     }
 }
