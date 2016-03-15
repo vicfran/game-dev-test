@@ -44,9 +44,6 @@ public class NetworkGoTDataSource implements GoTDataSource, GoTObservable {
 
     private List<GoTCharacterEntity> mCharacters;
 
-    // TODO : just a test, some kind of "cache", need to improve
-    private boolean updated = false;
-
     private NetworkGoTDataSource() {
         mMapper = new GoTCharacterEntityJsonMapper();
         mCharacters = new ArrayList<>();
@@ -104,7 +101,6 @@ public class NetworkGoTDataSource implements GoTDataSource, GoTObservable {
 
                     mCharacters = mMapper.transformList(response.toString());
 
-                    // TODO : DB testing, mange better
                     GoTCharacterEntity.deleteAll(GoTCharacterEntity.class);
                     GoTCharacterEntity.saveInTx(mCharacters);
                     CacheGoTPolicy.updateLastAccessTime();

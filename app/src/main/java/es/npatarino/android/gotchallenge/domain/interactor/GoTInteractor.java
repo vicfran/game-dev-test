@@ -46,7 +46,6 @@ public final class GoTInteractor {
         return findCharactersByName(name);
     }
 
-    // TODO : check about move this logic to repository itself
     private static List<GoTCharacter.GoTHouse> findHousesFromCharacters(List<GoTCharacter> characters) {
         List<GoTCharacter.GoTHouse> houses = new ArrayList<>();
 
